@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using OfferProject.Data.Data;
 using OfferProject.Service.Abstract;
@@ -10,25 +9,25 @@ namespace OfferProject.API.Controllers
     [Route("api/[controller]")]
     public class OffersController : Controller
     {
-        private readonly IOfferRepository offerRepository;        
+        private readonly IOfferRepository repository;        
 
-        public OffersController(IOfferRepository offerRepository)
+        public OffersController(IOfferRepository repository)
         {
-            this.offerRepository = offerRepository;            
+            this.repository = repository;            
         }
 
         // GET: api/<controller>
         [HttpGet]
         public IEnumerable<Offer> Get()
         {            
-            return offerRepository.Offers.ToList();
+            return repository.ReadAll();
         }
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
         public IActionResult Get(long id)
         {
-            var offer = offerRepository.ReadId(id);
+            var offer = repository.ReadId(id);
             if(offer != null)
             {
                 return new ObjectResult(offer);
@@ -48,43 +47,41 @@ namespace OfferProject.API.Controllers
                 if (offer != null)
                 {
                     offer.DateOfCreate = DateTime.Now;
-                    offer.CustomerId = 1; //user.Id; исполнитель(создатель - аторизованный пользователь)
-                    offerRepository.Create(offer);
+                    offer.CustomerId = 1; //user.Id; исполнитель(создатель - аторизованный пользователь)                    
+                    repository.Create(offer);
                     return Ok(offer);
                 }
-            }
-            
-
+            }            
             return BadRequest();
         }
 
-        // PUT api/<controller>/5
-        [HttpPut("{id}")]
+        // PUT api/<controller>
+        [HttpPut]
         public IActionResult Put([FromBody]Offer offer)
         {
             if (ModelState.IsValid)
             {
-                var updatedOffer = offerRepository.ReadId(offer.Id);
+                var updatedOffer = repository.ReadId(offer.Id);
                 if (updatedOffer != null)
-                {                    
+                {
+                    updatedOffer.ExploreId = offer.ExploreId;
                     //код с введением изменения
-
-                    offerRepository.Update(updatedOffer);
-                    return RedirectToAction("api/UpdateOfOffer/", updatedOffer.Id);
+                    repository.Update(updatedOffer);
+                    return Ok(updatedOffer);
                 }
                 return NotFound();
             }
-            return BadRequest(ModelState);            
+            return BadRequest();            
         }
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {
-            var offer = offerRepository.ReadId(id);
+            var offer = repository.ReadId(id);
             if(offer != null)
             {
-                offerRepository.Delete(offer);
+                repository.Delete(offer);
                 return Ok();
             }
             return NotFound();

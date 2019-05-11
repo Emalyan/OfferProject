@@ -10,3 +10,15 @@ C:\Users\User\source\repos\ModelAndCrudServiseContract\OfferProject.Service\obj\
 C:\Users\User\source\repos\ModelAndCrudServiseContract\OfferProject.Service\bin\Debug\netcoreapp2.1\OfferProject.Data.dll
 C:\Users\User\source\repos\ModelAndCrudServiseContract\OfferProject.Service\bin\Debug\netcoreapp2.1\OfferProject.Data.pdb
 C:\Users\User\source\repos\ModelAndCrudServiseContract\OfferProject.Service\obj\Debug\netcoreapp2.1\OfferProject.Service.csproj.CopyComplete
+C:\Users\User\source\repos\OfferProject\OfferProject.Service\bin\Debug\netcoreapp2.1\OfferProject.Service.deps.json
+C:\Users\User\source\repos\OfferProject\OfferProject.Service\bin\Debug\netcoreapp2.1\OfferProject.Service.dll
+C:\Users\User\source\repos\OfferProject\OfferProject.Service\bin\Debug\netcoreapp2.1\OfferProject.Service.pdb
+C:\Users\User\source\repos\OfferProject\OfferProject.Service\bin\Debug\netcoreapp2.1\OfferProject.Data.dll
+C:\Users\User\source\repos\OfferProject\OfferProject.Service\bin\Debug\netcoreapp2.1\OfferProject.Data.pdb
+C:\Users\User\source\repos\OfferProject\OfferProject.Service\obj\Debug\netcoreapp2.1\OfferProject.Service.csprojAssemblyReference.cache
+C:\Users\User\source\repos\OfferProject\OfferProject.Service\obj\Debug\netcoreapp2.1\OfferProject.Service.csproj.CoreCompileInputs.cache
+C:\Users\User\source\repos\OfferProject\OfferProject.Service\obj\Debug\netcoreapp2.1\OfferProject.Service.AssemblyInfoInputs.cache
+C:\Users\User\source\repos\OfferProject\OfferProject.Service\obj\Debug\netcoreapp2.1\OfferProject.Service.AssemblyInfo.cs
+C:\Users\User\source\repos\OfferProject\OfferProject.Service\obj\Debug\netcoreapp2.1\OfferProject.Service.csproj.CopyComplete
+C:\Users\User\source\repos\OfferProject\OfferProject.Service\obj\Debug\netcoreapp2.1\OfferProject.Service.dll
+C:\Users\User\source\repos\OfferProject\OfferProject.Service\obj\Debug\netcoreapp2.1\OfferProject.Service.pdb

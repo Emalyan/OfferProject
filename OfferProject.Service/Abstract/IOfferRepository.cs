@@ -5,11 +5,10 @@ namespace OfferProject.Service.Abstract
 {
     public interface IOfferRepository
     {
-        IEnumerable<Offer> Offers { get; }
+        IEnumerable<Offer> ReadAll();
         void Create(Offer offer);
         void Delete(Offer offer);
-        void Update(Offer offer);
-        IList<Offer> ReadAll();
-        Offer ReadId(long id);
+        void Update(Offer offer);        
+        Offer ReadId(long id);         
     }
 }

@@ -7,6 +7,6 @@ namespace OfferProject.Data.Data
         public long Id { get; set; }
         public DateTime DateOfCreate { get; set; }
         public long CustomerId { get; set; }
-        public long ExplorerId { get; set; }
+        public long ExploreId { get; set; }
     }
 }

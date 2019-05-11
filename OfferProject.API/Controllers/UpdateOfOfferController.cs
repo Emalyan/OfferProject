@@ -9,25 +9,25 @@ namespace OfferProject.API.Controllers
     [Route("api/[controller]")]
     public class UpdateOfOfferController : Controller
     {
-        private readonly IUpdateOfOfferRepository updateOfOfferRepository;
+        private readonly IUpdateOfOfferRepository repository;
 
-        public UpdateOfOfferController(IUpdateOfOfferRepository updateOfOfferRepository)
+        public UpdateOfOfferController(IUpdateOfOfferRepository repository)
         {
-            this.updateOfOfferRepository = updateOfOfferRepository;
+            this.repository = repository;
         }
 
         // GET: api/<controller>
         [HttpGet]
         public IEnumerable<UpdateOfOffer> Get()
         {
-            return updateOfOfferRepository.UpdatesOfOffers;
+            return repository.ReadAll();
         }
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
         public IActionResult Get(long id)
         {
-            var updateOfOffer = updateOfOfferRepository.ReadId(id);
+            var updateOfOffer = repository.ReadId(id);
 
             if (updateOfOffer != null)
             {
@@ -38,30 +38,29 @@ namespace OfferProject.API.Controllers
         }
 
         // POST api/<controller>
-        [HttpPost("{id}")]
-        public IActionResult Post(long offerId)
+        [HttpPost]        
+        public IActionResult Post([FromBody]Offer offer)
         {            
             //Здесь будет код с помощью каторого будет надодится авторизованный пользователь(тот кто вводит изменения)
-
             var updateOfOffer = new UpdateOfOffer
             {
                 DateOfUpdate = DateTime.Now,
-                OfferId = offerId,
+                OfferId = offer.Id,
                 Updateby = 1 //id пользователя, который вводит изменения               
             };
 
-            updateOfOfferRepository.Create(updateOfOffer);
-            return Ok();
+            repository.Create(updateOfOffer);
+            return Ok(updateOfOffer);
         }        
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {
-            var updateOfOffer = updateOfOfferRepository.ReadId(id);
+            var updateOfOffer = repository.ReadId(id);
             if(updateOfOffer != null)
             {
-                updateOfOfferRepository.Delete(updateOfOffer);
+                repository.Delete(updateOfOffer);
                 return Ok();
             }
 

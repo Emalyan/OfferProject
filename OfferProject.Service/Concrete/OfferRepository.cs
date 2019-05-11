@@ -1,50 +1,71 @@
-﻿using OfferProject.Data.Data;
+﻿using Dapper;
+using Microsoft.Extensions.Configuration;
+using Npgsql;
+using OfferProject.Data.Data;
 using OfferProject.Service.Abstract;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 
 namespace OfferProject.Service.Concrete
 {
     public class OfferRepository : IOfferRepository
-    {
-        private readonly DataContext db;
+    {        
+        private readonly string connectionString;   
 
-        public OfferRepository(DataContext db)
-        {
-            this.db = db;
+        public OfferRepository(IConfiguration configuration)
+        {            
+            connectionString = configuration.GetConnectionString("DevConnect");
         }
 
-        public IEnumerable<Offer> Offers
+        internal IDbConnection Connection
         {
-            get { return db.Offers; }
+            get { return new NpgsqlConnection(connectionString); }
+        }
+
+        public IEnumerable<Offer> ReadAll()
+        {            
+            using(IDbConnection dbConnection = Connection)
+            {
+                dbConnection.Open();
+                return dbConnection.Query<Offer>("SELECT * FROM offer");
+            }
         }
 
         public void Create(Offer offer)
         {
-            db.Offers.Add(offer);
-            db.SaveChanges();
+            using(IDbConnection dbConnection = Connection)
+            {
+                dbConnection.Open();
+                dbConnection.Execute("INSERT INTO offer (dateofcreate, customerid, exploreid) VALUES(@DateOFCreate, @CustomerId, @ExploreId)", offer);
+            }
         }
 
         public void Delete(Offer offer)
         {
-            db.Offers.Remove(offer);
-            db.SaveChanges();
-        }
-
-        public IList<Offer> ReadAll()
-        {
-            return db.Offers.ToList();
-        }
+            using(IDbConnection dbConnection = Connection)
+            {
+                dbConnection.Open();
+                dbConnection.Execute("DELETE FROM offer WHERE id=@Id", new { Id = offer.Id });
+            }
+        }        
 
         public Offer ReadId(long id)
         {
-            return db.Offers.FirstOrDefault(x => x.Id == id);
+            using(IDbConnection dbConnection = Connection)
+            {
+                dbConnection.Open();
+                return dbConnection.Query<Offer>("SELECT * FROM offer WHERE id = @Id", new { Id = id }).FirstOrDefault();
+            }
         }
 
         public void Update(Offer offer)
         {
-            db.Offers.Update(offer);
-            db.SaveChanges();
+            using(IDbConnection dbConnection = Connection)
+            {
+                dbConnection.Open();
+                dbConnection.Query("UPDATE offer SET exploreid = @ExploreId WHERE id = @Id", offer);
+            }
         }
     }
 }
